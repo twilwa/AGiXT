@@ -1,0 +1,52 @@
+namespace: agixt
+agixt:
+  defines: runnable
+  metadata:
+    name: agixt
+    description: >-
+      An Artificial Intelligence Automation Platform. AI Instruction management
+      from various providers, has an adaptive memory, and a versatile plugin
+      system with many commands including web browsing.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    agixt:
+      build: .
+  services:
+    uvicorn-server:
+      container: agixt
+      port: 7437
+      host-port: 7437
+      publish: false
+      protocol: TCP
+      description: Port for uvicorn server handling HTTP requests
+  variables:
+    pythonunbuffered:
+      env: PYTHONUNBUFFERED
+      type: string
+      description: Force Python to run in unbuffered mode
+      value: '1'
+    pythonioencoding:
+      env: PYTHONIOENCODING
+      type: string
+      description: Sets the encoding used for Python IO operations
+      value: UTF-8
+    poetry-no-interaction:
+      env: POETRY_NO_INTERACTION
+      type: string
+      description: Configures poetry to not ask any interactive questions
+      value: '1'
+    hnswlib-no-native:
+      env: HNSWLIB_NO_NATIVE
+      type: string
+      description: Disables native extensions for hnswlib python library
+      value: '!!!SETME!!!'
+    path:
+      env: PATH
+      type: string
+      description: System path
+      value: /usr/local/bin:$PATH
+    ld-preload:
+      env: LD_PRELOAD
+      type: string
+      description: Preloads the libgomp.so.1 library
+      value: libgomp.so.1
